@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 class N_Back {
     static String instruction =
-            "This is the learning session and our will see sequence of  10 random letters. Your task will be click 'Y' " +
+            "This is the learning session and our will see sequence of  10 random letters. After FIRST 3 letters, your task will be click 'Y' " +
             "if current letter is the same than the second letter before.\n" +
             "In other case you have to click 'N'. On the end You will see your score.\n" +
             "Do not care of the result of this session. The same task with different letter will be repeated.\n" +
@@ -39,7 +39,7 @@ class N_Back {
             participantAnswer = scanner.nextLine();
             Boolean lettersEqual = listOfLetters[numberOfLetter].equals(listOfLetters[numberOfLetter - 2]);
             String expectedAnswer = lettersEqual ? answerPositive : answerNegative;
-            if(expectedAnswer.equals(participantAnswer)){
+            if(expectedAnswer.equalsIgnoreCase(participantAnswer)){
                 numberOfCorrectAnswers++;
             }
             System.out.println(whiteSpace);
