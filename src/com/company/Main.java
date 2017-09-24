@@ -1,0 +1,97 @@
+package com.company;
+
+import java.util.Scanner;
+
+class N_Back {
+    static String instruction =
+            "This is the learning session and our will see sequence of  10 random letters. Your task will be click 'Y' " +
+            "if current letter is the same than the second letter before.\n" +
+            "In other case you have to click 'N'. On the end You will see your score.\n" +
+            "Do not care of the result of this session. The same task with different letter will be repeated.\n" +
+            "\n" +
+            "When your will be ready, click ENTER.\n" +
+            "\n" +
+            "GOOD LUCK :)\"";
+    private final String[] listOfLetters = {"d","b","d","w","k"};
+    private final String answerPositive = "Y";
+    private final String answerNegative = "N";
+    String participantAnswer;
+    int numberOfLetter;
+    int correctAnswer = 1;
+    int numberOfCorrectAnswers;
+
+    public void showInstruction(){
+        System.out.println(instruction);
+    }
+
+    public int showListWithRandomLetter(){
+        for(int numberOfLetter = 0; numberOfLetter < listOfLetters.length - 1; numberOfLetter++){
+            System.out.println(listOfLetters[numberOfLetter]);
+            if(numberOfLetter < 2){
+                continue;
+            }
+            Scanner participantAnswers = new Scanner(System.in);
+            participantAnswer = participantAnswers.nextLine();
+            if(listOfLetters[numberOfLetter].equals(listOfLetters[numberOfLetter - 2])){
+                if(answerPositive.equals(participantAnswer)){
+                    numberOfCorrectAnswers = correctAnswer++;
+                }
+            }else{
+                if(answerNegative.equals(participantAnswer)){
+                    numberOfCorrectAnswers = correctAnswer++;
+                }
+            }
+        }
+        return numberOfCorrectAnswers;
+    }
+
+    public void showTheResult(){
+        String theEnding = "Well done! You have " + numberOfCorrectAnswers + " correct answers.";
+        System.out.println(theEnding);
+    }
+}
+
+public class Main{
+    public  static void main(String[] args) {
+        N_Back session1 = new N_Back();
+        session1.showInstruction();
+        session1.showListWithRandomLetter();
+        session1.showTheResult();
+    }
+}
+
+
+//TODO: 1 level - 2n-back
+//TODO: Instruction for participants.
+//TODO: The task to do: Show the list of letters with 1s. breaks.
+/*
+1). instruction:
+TODO - "This is the learning session and our will see sequence of  10 random letters. Your task will be click 'Y' if current letter is the same than the second letter before.
+TODO    In other case you have to click 'N'. On the end You will see your score.
+TODO    Do not care of the result of this session. The same task with different letter will be repeated.
+
+TODO    When your will be ready, click ENTER.
+
+TODO    GOOD LUCK :)"
+
+2). prepare list with letters:
+    TODO - 10 random letters
+
+3). show each of the letter:
+    TODO - find way to collect the correct and wrong reactions
+
+4). wait for reaction: click 'Y' or 'N'
+    TODO - wait 1second
+    - Type of reactions:
+        TODO - correct reaction: if 2 letters ago was the same letter what is now, participant should click Y
+        TODO - correct reaction: if participant clicks N when the letter is not the same than 2 letters ago
+        - wrong reaction 1: if participant won't click ENTER when 2 letters ago was the same letter what is now
+        - wrong reaction 2: if participant click ENTER when the letter is not the same than 2 letters ago
+
+5). sum correct reactions:
+    TODO - put correct reaction to the list (correct pairs of letter or only letter when was reaction correct)
+    TODO - put wrong reaction (the same thing to do what with correct reaction)
+
+6). show results: how many good and bad reactions:
+    TODO - "Your results: corrects(sth) / wrong(sth)."
+ */
