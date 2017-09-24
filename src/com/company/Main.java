@@ -15,34 +15,28 @@ class N_Back {
     private final String[] listOfLetters = {"d","b","d","w","k"};
     private final String answerPositive = "Y";
     private final String answerNegative = "N";
-    String participantAnswer;
-    int numberOfLetter;
-    int correctAnswer = 1;
-    int numberOfCorrectAnswers;
+    int numberOfCorrectAnswers = 0;
 
     public void showInstruction(){
         System.out.println(instruction);
     }
 
-    public int showListWithRandomLetter(){
+    public void showListWithRandomLetter(){
+        String participantAnswer;
+        Scanner scanner = new Scanner(System.in);
+
         for(int numberOfLetter = 0; numberOfLetter < listOfLetters.length - 1; numberOfLetter++){
             System.out.println(listOfLetters[numberOfLetter]);
             if(numberOfLetter < 2){
                 continue;
             }
-            Scanner participantAnswers = new Scanner(System.in);
-            participantAnswer = participantAnswers.nextLine();
-            if(listOfLetters[numberOfLetter].equals(listOfLetters[numberOfLetter - 2])){
-                if(answerPositive.equals(participantAnswer)){
-                    numberOfCorrectAnswers = correctAnswer++;
-                }
-            }else{
-                if(answerNegative.equals(participantAnswer)){
-                    numberOfCorrectAnswers = correctAnswer++;
-                }
+            participantAnswer = scanner.nextLine();
+            Boolean lettersEqual = listOfLetters[numberOfLetter].equals(listOfLetters[numberOfLetter - 2]);
+            String expectedAnswer = lettersEqual ? answerPositive : answerNegative;
+            if(expectedAnswer.equals(participantAnswer)){
+                numberOfCorrectAnswers++;
             }
         }
-        return numberOfCorrectAnswers;
     }
 
     public void showTheResult(){
