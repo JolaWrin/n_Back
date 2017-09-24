@@ -1,5 +1,8 @@
 package com.company;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 class N_Back {
@@ -46,6 +49,21 @@ class N_Back {
         }
 
     }
+    public char getRandomLetter(){
+        Random random = new Random();
+        int letter = random.nextInt(26) + (byte)'a';
+        return ((char)letter);
+    }
+
+    public List<Character> putRansomLetterToTheList() {
+        List<Character> listOfRandomLetter = new ArrayList<>();
+        for (int i = 0; i <= 10; i++){
+            listOfRandomLetter.add(getRandomLetter());
+            System.out.println(listOfRandomLetter);
+        }
+        return listOfRandomLetter;
+    }
+
 
     public void showTheResult(){
         String theEnding = "Well done! You have " + numberOfCorrectAnswers + " correct answers from 5.";
@@ -56,9 +74,13 @@ class N_Back {
 public class Main{
     public  static void main(String[] args) throws InterruptedException {
         N_Back session1 = new N_Back();
-        session1.showInstruction();
-        session1.showListWithRandomLetter();
-        session1.showTheResult();
+//        session1.showInstruction();
+//        session1.showListWithRandomLetter();
+//        session1.showTheResult();
+
+        session1.putRansomLetterToTheList();
+        //session1.getRandomLetter();
+
     }
 }
 
