@@ -15,38 +15,46 @@ class N_Back {
     private final String[] listOfLetters = {"d","b","d","w","k"};
     private final String answerPositive = "Y";
     private final String answerNegative = "N";
-    int numberOfCorrectAnswers = 0;
+    private final String optionsToChoose = "'Y' or 'N'?";
+    private final String whiteSpace = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    private static final int delay = 1000;
+    private int numberOfCorrectAnswers = 0;
 
     public void showInstruction(){
         System.out.println(instruction);
     }
 
-    public void showListWithRandomLetter(){
+    public void showListWithRandomLetter() throws InterruptedException {
         String participantAnswer;
         Scanner scanner = new Scanner(System.in);
 
         for(int numberOfLetter = 0; numberOfLetter < listOfLetters.length - 1; numberOfLetter++){
             System.out.println(listOfLetters[numberOfLetter]);
+            Thread.sleep(delay);
+            System.out.println(whiteSpace);
             if(numberOfLetter < 2){
                 continue;
             }
+            System.out.println(optionsToChoose);
             participantAnswer = scanner.nextLine();
             Boolean lettersEqual = listOfLetters[numberOfLetter].equals(listOfLetters[numberOfLetter - 2]);
             String expectedAnswer = lettersEqual ? answerPositive : answerNegative;
             if(expectedAnswer.equals(participantAnswer)){
                 numberOfCorrectAnswers++;
             }
+            System.out.println(whiteSpace);
         }
+
     }
 
     public void showTheResult(){
-        String theEnding = "Well done! You have " + numberOfCorrectAnswers + " correct answers.";
+        String theEnding = "Well done! You have " + numberOfCorrectAnswers + " correct answers from 5.";
         System.out.println(theEnding);
     }
 }
 
 public class Main{
-    public  static void main(String[] args) {
+    public  static void main(String[] args) throws InterruptedException {
         N_Back session1 = new N_Back();
         session1.showInstruction();
         session1.showListWithRandomLetter();
