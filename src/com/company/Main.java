@@ -22,6 +22,8 @@ class N_Back {
     private final String whiteSpace = "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
     private static final int delay = 1000;
     private int numberOfCorrectAnswers = 0;
+    private int size = 20;
+    private double probability = 0.3;
 
     public void showInstruction(){
         System.out.println(instruction);
@@ -55,13 +57,22 @@ class N_Back {
         return String.valueOf((char)letter);
     }
 
-    public List<String> putRansomLetterToTheList() {
+    public List<String> prepareListOfRandomLetters(int size, double probability) {
         List<String> listOfRandomLetter = new ArrayList<>();
-        for (int i = 0; i <= 10; i++){
-            listOfRandomLetter.add(getRandomLetter());
-            System.out.println(listOfRandomLetter);
+        for (int i = 0; i <= size; i++){
+            double randomNumber = generateRandomNumber();
+            if(randomNumber <= probability && i >= 2){
+                listOfRandomLetter.add(listOfRandomLetter.get(i - 2));
+            }else{
+                listOfRandomLetter.add(getRandomLetter());
+            }
         }
         return listOfRandomLetter;
+    }
+
+    private double generateRandomNumber() {
+        Random random = new Random();
+        return random.nextDouble();
     }
 
 
@@ -77,8 +88,6 @@ public class Main{
 //        session1.showInstruction();
 //        session1.showListWithRandomLetter();
 //        session1.showTheResult();
-
-        session1.putRansomLetterToTheList();
         //session1.getRandomLetter();
 
     }
