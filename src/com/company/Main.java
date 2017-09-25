@@ -49,14 +49,14 @@ class N_Back {
         }
 
     }
-    public char getRandomLetter(){
+    public String getRandomLetter(){
         Random random = new Random();
         int letter = random.nextInt(26) + (byte)'a';
-        return ((char)letter);
+        return String.valueOf((char)letter);
     }
 
-    public List<Character> putRansomLetterToTheList() {
-        List<Character> listOfRandomLetter = new ArrayList<>();
+    public List<String> putRansomLetterToTheList() {
+        List<String> listOfRandomLetter = new ArrayList<>();
         for (int i = 0; i <= 10; i++){
             listOfRandomLetter.add(getRandomLetter());
             System.out.println(listOfRandomLetter);
