@@ -4,7 +4,7 @@ import java.util.*;
 
 class N_Back {
     private int n;
-    private int size = 5;
+    private int size;
     private final String answerPositive = "Y";
     private final String answerNegative = "N";
     private final String quit = "Q";
@@ -13,7 +13,7 @@ class N_Back {
     private static final int delay = 2000;
     private int numberOfCorrectAnswers = 0;
     private double probability = 0.3;
-    private int result = size - 2;
+    private int result;
     private String instruction =
             whiteSpace+"This is the learning session of the 'n-back' test, where you will see sequence of %s random letters." + " " +
                     "After FIRST  %s letters, your task will be to press 'Y' " +
@@ -24,9 +24,10 @@ class N_Back {
                     "When your will be ready, click ENTER.\n" +
                     "\n" +
                     "GOOD LUCK :)\"";
-    public N_Back(int n){
+    public N_Back(int n, int size){
         this.n = n;
-
+        this.size = size;
+        this.result = size - n;
     }
 
     public void showInstruction(){
@@ -39,7 +40,7 @@ class N_Back {
     public void showListWithRandomLetter() throws InterruptedException {
         String participantAnswer;
         Scanner scanner = new Scanner(System.in);
-        List<String> listOfLetters =  prepareListOfRandomLetters(size, probability);
+        List<String> listOfLetters =  prepareListOfRandomLetters(probability);
 
         for(int numberOfLetter = 0; numberOfLetter < listOfLetters.size() - 1; numberOfLetter++){
             System.out.println("                 " + listOfLetters.get(numberOfLetter));
@@ -67,7 +68,7 @@ class N_Back {
         return String.valueOf((char)letter);
     }
 
-    public List<String> prepareListOfRandomLetters(int size, double probability) {
+    public List<String> prepareListOfRandomLetters(double probability) {
         List<String> listOfRandomLetter = new ArrayList<>();
         for (int i = 0; i <= size; i++){
             double randomNumber = generateRandomNumber();
@@ -86,23 +87,23 @@ class N_Back {
     }
 
     public void showTheResult() throws InterruptedException {
-        String theEnding = "Well done! You have " + numberOfCorrectAnswers + " correct answers from "+result+".";
-        System.out.println(theEnding);
+        String theEnding = "Well done! You have %s correct answers from %s.";
+        System.out.println(String.format(theEnding, numberOfCorrectAnswers, result));
         Thread.sleep(delay);
     }
 }
 
 public class Main{
     public  static void main(String[] args) throws InterruptedException {
-        N_Back session1 = new N_Back(2);
+        N_Back session1 = new N_Back(2, 12);
         session1.showInstruction();
         session1.showListWithRandomLetter();
         session1.showTheResult();
-        N_Back session2 = new N_Back(3);
+        N_Back session2 = new N_Back(3, 12);
         session2.showInstruction();
         session2.showListWithRandomLetter();
         session2.showTheResult();
-        N_Back session3 = new N_Back(4);
+        N_Back session3 = new N_Back(4, 12);
         session3.showInstruction();
         session3.showListWithRandomLetter();
         session3.showTheResult();
