@@ -5,6 +5,8 @@ import java.util.*;
 class N_Back {
     private int n;
     private int size;
+    private int result;
+    private List<String> listOfLetters;
     private final String answerPositive = "Y";
     private final String answerNegative = "N";
     private final String quit = "Q";
@@ -13,7 +15,6 @@ class N_Back {
     private static final int delay = 2000;
     private int numberOfCorrectAnswers = 0;
     private double probability = 0.3;
-    private int result;
     private String instruction =
             whiteSpace+"This is the learning session of the 'n-back' test, where you will see sequence of %s random letters." + " " +
                     "After FIRST  %s letters, your task will be to press 'Y' " +
@@ -28,6 +29,15 @@ class N_Back {
         this.n = n;
         this.size = size;
         this.result = size - n;
+        this.listOfLetters = prepareListOfRandomLetters(probability);
+    }
+
+    public N_Back(int n, List<String> listOfLetters){
+        this.n = n;
+        this.listOfLetters = listOfLetters;
+        this.size = listOfLetters.size();
+        this.result = this.size - n;
+
     }
 
     public void showInstruction(){
@@ -40,8 +50,6 @@ class N_Back {
     public void showListWithRandomLetter() throws InterruptedException {
         String participantAnswer;
         Scanner scanner = new Scanner(System.in);
-        List<String> listOfLetters =  prepareListOfRandomLetters(probability);
-
         for(int numberOfLetter = 0; numberOfLetter < listOfLetters.size() - 1; numberOfLetter++){
             System.out.println("                 " + listOfLetters.get(numberOfLetter));
             Thread.sleep(delay);
@@ -95,7 +103,7 @@ class N_Back {
 
 public class Main{
     public  static void main(String[] args) throws InterruptedException {
-        N_Back session1 = new N_Back(2, 12);
+        N_Back session1 = new N_Back(2, Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k"));
         session1.showInstruction();
         session1.showListWithRandomLetter();
         session1.showTheResult();
