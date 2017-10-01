@@ -2,6 +2,7 @@ package com.company;
 
 import java.util.*;
 
+
 class N_Back {
     private int n;
     private int size;
@@ -25,9 +26,9 @@ class N_Back {
                     "\n" +
                     "GOOD LUCK :)\"";
 
-    public N_Back(int n, List<String> listOfLetters){
-        this.n = n;
-        this.listOfLetters = listOfLetters;
+    public N_Back(DataSource data){
+        this.n = data.getN();
+        this.listOfLetters = data.getListOfLetters();
         this.size = listOfLetters.size();
         this.result = this.size - n;
 
@@ -40,7 +41,7 @@ class N_Back {
         System.out.println(whiteSpace);
     }
 
-    public void showListWithRandomLetter() throws InterruptedException {
+    public void runTest() throws InterruptedException {
         String participantAnswer;
         Scanner scanner = new Scanner(System.in);
         for(int numberOfLetter = 0; numberOfLetter < listOfLetters.size() - 1; numberOfLetter++){
@@ -69,14 +70,33 @@ class N_Back {
         Thread.sleep(delay);
     }
 }
-class RandomListGenerator{
+
+
+interface DataSource {
+    public int getN();
+    public List<String> getListOfLetters();
+}
+
+
+class RandomListGenerator implements DataSource {
+    private int n;
+    private int size;
+    private double probability;
+
+    public RandomListGenerator(int n, int size, double probability){
+        this.n = n;
+        this.size = size;
+        this.probability = probability;
+
+    }
+
     public String getRandomLetter(){
         Random random = new Random();
         int letter = random.nextInt(26) + (byte)'a';
         return String.valueOf((char)letter);
     }
 
-    public List<String> prepareListOfRandomLetters(int n, int size, double probability) {
+    public List<String> getListOfLetters() {
         List<String> listOfRandomLetter = new ArrayList<>();
         for (int i = 0; i <= size; i++){
             double randomNumber = generateRandomNumber();
@@ -94,25 +114,39 @@ class RandomListGenerator{
         return random.nextDouble();
     }
 
+    @Override
+    public int getN() {
+        return n;
+    }
 }
-
+// 2,
 public class Main{
     public  static void main(String[] args) throws InterruptedException {
-        N_Back session1 = new N_Back(2, Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k"));
+        DataSource dataSource = new DataSource() {
+            @Override
+            public int getN() {
+                return 2;
+            }
+
+            @Override
+            public List<String> getListOfLetters() {
+                return Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k");
+            }
+        };
+        N_Back session1 = new N_Back(dataSource);
         session1.showInstruction();
-        session1.showListWithRandomLetter();
+        session1.runTest();
         session1.showTheResult();
-        RandomListGenerator generator = new RandomListGenerator();
-        List<String> list = generator.prepareListOfRandomLetters(3, 12, 0.3);
-        N_Back session2 = new N_Back(3, list);
+
+        RandomListGenerator generator = new RandomListGenerator(3, 13, 0.3);
+        N_Back session2 = new N_Back(generator);
         session2.showInstruction();
-        session2.showListWithRandomLetter();
+        session2.runTest();
         session2.showTheResult();
-        RandomListGenerator generator1 = new RandomListGenerator();
-        List<String> list1 = generator1.prepareListOfRandomLetters(4, 12, 0.3);
-        N_Back session3 = new N_Back(4, list1);
+        RandomListGenerator generator1 = new RandomListGenerator(4, 13, 0.3);
+        N_Back session3 = new N_Back(generator1);
         session3.showInstruction();
-        session3.showListWithRandomLetter();
+        session3.runTest();
         session3.showTheResult();
     }
 }
