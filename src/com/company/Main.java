@@ -138,7 +138,8 @@ class RandomListGenerator implements DataSource {
         return n;
     }
 }
-// 2,
+
+
 public class Main{
     public  static void main(String[] args) throws InterruptedException {
         DataSource dataSource = new FixedList(2, Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k"));
