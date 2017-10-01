@@ -14,7 +14,6 @@ class N_Back {
     private final String whiteSpace= String.join("", Collections.nCopies(40, "\n"));;
     private static final int delay = 2000;
     private int numberOfCorrectAnswers = 0;
-    private double probability = 0.3;
     private String instruction =
             whiteSpace+"This is the learning session of the 'n-back' test, where you will see sequence of %s random letters." + " " +
                     "After FIRST  %s letters, your task will be to press 'Y' " +
@@ -25,12 +24,6 @@ class N_Back {
                     "When your will be ready, click ENTER.\n" +
                     "\n" +
                     "GOOD LUCK :)\"";
-    public N_Back(int n, int size){
-        this.n = n;
-        this.size = size;
-        this.result = size - n;
-        this.listOfLetters = prepareListOfRandomLetters(probability);
-    }
 
     public N_Back(int n, List<String> listOfLetters){
         this.n = n;
@@ -70,13 +63,20 @@ class N_Back {
         }
     }
 
+    public void showTheResult() throws InterruptedException {
+        String theEnding = "Well done! You have %s correct answers from %s.";
+        System.out.println(String.format(theEnding, numberOfCorrectAnswers, result));
+        Thread.sleep(delay);
+    }
+}
+class RandomListGenerator{
     public String getRandomLetter(){
         Random random = new Random();
         int letter = random.nextInt(26) + (byte)'a';
         return String.valueOf((char)letter);
     }
 
-    public List<String> prepareListOfRandomLetters(double probability) {
+    public List<String> prepareListOfRandomLetters(int n, int size, double probability) {
         List<String> listOfRandomLetter = new ArrayList<>();
         for (int i = 0; i <= size; i++){
             double randomNumber = generateRandomNumber();
@@ -94,11 +94,6 @@ class N_Back {
         return random.nextDouble();
     }
 
-    public void showTheResult() throws InterruptedException {
-        String theEnding = "Well done! You have %s correct answers from %s.";
-        System.out.println(String.format(theEnding, numberOfCorrectAnswers, result));
-        Thread.sleep(delay);
-    }
 }
 
 public class Main{
@@ -107,11 +102,15 @@ public class Main{
         session1.showInstruction();
         session1.showListWithRandomLetter();
         session1.showTheResult();
-        N_Back session2 = new N_Back(3, 12);
+        RandomListGenerator generator = new RandomListGenerator();
+        List<String> list = generator.prepareListOfRandomLetters(3, 12, 0.3);
+        N_Back session2 = new N_Back(3, list);
         session2.showInstruction();
         session2.showListWithRandomLetter();
         session2.showTheResult();
-        N_Back session3 = new N_Back(4, 12);
+        RandomListGenerator generator1 = new RandomListGenerator();
+        List<String> list1 = generator1.prepareListOfRandomLetters(4, 12, 0.3);
+        N_Back session3 = new N_Back(4, list1);
         session3.showInstruction();
         session3.showListWithRandomLetter();
         session3.showTheResult();
