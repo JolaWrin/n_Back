@@ -77,6 +77,25 @@ interface DataSource {
     public List<String> getListOfLetters();
 }
 
+class FixedList implements DataSource{
+    private int n;
+    private List<String> list;
+
+    public FixedList(int n, List<String> list){
+        this.n = n;
+        this.list = list;
+    }
+    @Override
+    public int getN() {
+        return n;
+    }
+
+    @Override
+    public List<String> getListOfLetters() {
+        return Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k");
+    }
+}
+
 
 class RandomListGenerator implements DataSource {
     private int n;
@@ -122,17 +141,7 @@ class RandomListGenerator implements DataSource {
 // 2,
 public class Main{
     public  static void main(String[] args) throws InterruptedException {
-        DataSource dataSource = new DataSource() {
-            @Override
-            public int getN() {
-                return 2;
-            }
-
-            @Override
-            public List<String> getListOfLetters() {
-                return Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k");
-            }
-        };
+        DataSource dataSource = new FixedList(2, Arrays.asList("v", "z", "n", "z", "k", "n", "p", "w", "k", "p", "k"));
         N_Back session1 = new N_Back(dataSource);
         session1.showInstruction();
         session1.runTest();
